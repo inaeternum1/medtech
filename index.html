@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>의료기술직 매일 모의고사</title>
+<link rel="icon" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f4f3;--card:#fff;--ink:#14302b;--sub:#56706a;--line:#d2dcd9;--ok:#1f8a5b;--no:#c8434e;--b:#2f7d6d;--g:#3c6fd1;--l:#b06a12;--dk:#b06a12;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a18;--card:#182624;--ink:#e6f1ee;--sub:#97b0aa;--line:#2b3d3a;--ok:#4cc995;--no:#ff7d88;--b:#5cc7b0;--g:#86a9ff;--l:#f0a64a;--dk:#f0a64a}}
+:root[data-theme="dark"]{--bg:#0f1a18;--card:#182624;--ink:#e6f1ee;--sub:#97b0aa;--line:#2b3d3a;--ok:#4cc995;--no:#ff7d88;--b:#5cc7b0;--g:#86a9ff;--l:#f0a64a;--dk:#f0a64a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16.5px;line-height:1.65}
+main{max-width:660px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.75rem;line-height:1.3;margin:12px 0 6px;font-weight:700}
+h2.sec{font-size:1.2rem;margin:22px 0 8px;font-weight:700}
+.lead{color:var(--sub);margin:0 0 18px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+.all{width:100%;margin-top:14px;padding:15px;border:0;border-radius:14px;background:var(--ink);color:var(--bg);font:inherit;font-weight:700;font-size:1.1rem;cursor:pointer}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%;background:var(--c);width:0;transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--sub);font-size:.9rem}
+.q{background:var(--card);border-radius:16px;padding:18px;border-top:5px solid var(--c)}
+.q h2{font-size:1.12rem;line-height:1.6;margin:0 0 6px;white-space:pre-line;font-weight:500}
+.tag{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:99px;background:var(--bg);color:var(--sub);margin-bottom:10px}
+.opt{display:flex;gap:10px;width:100%;text-align:left;margin-top:9px;padding:13px 14px;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;font:inherit;cursor:pointer}
+.opt .no{flex:none;color:var(--sub)}
+.opt.pick{border-color:var(--g);background:color-mix(in srgb,var(--g) 14%,var(--card))}
+.opt.dk{border-style:dashed;color:var(--sub);margin-top:16px;justify-content:center}
+.opt.dk.pick{border-style:solid;border-color:var(--dk);background:color-mix(in srgb,var(--dk) 16%,var(--card));color:var(--ink)}
+.navrow{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:14px}
+.next{width:100%;padding:13px;border:0;border-radius:12px;background:var(--c);color:#fff;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer}
+.next:disabled{opacity:.4;cursor:default}
+.home{background:none;border:2px solid var(--ink);color:var(--ink);padding:11px;border-radius:12px;width:100%;font:inherit;cursor:pointer;margin-top:8px}
+.navrow .home{margin-top:0}
+.res{background:var(--card);border-radius:16px;padding:18px;margin-bottom:14px}
+.res h3{margin:0;font-size:1.2rem;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.weak{color:var(--sub);font-size:.9rem}
+.wrong{border-top:1px dashed var(--line);margin-top:10px;padding-top:10px;font-size:.95rem;overflow-wrap:anywhere}
+label{display:block;margin:6px 0 4px;color:var(--sub)}
+input,select{width:100%;padding:13px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:2px solid var(--c);color:var(--c);border-radius:99px;padding:0 10px;font-size:.88rem}
+summary{cursor:pointer;color:var(--sub);margin-top:6px}
+.psg{background:var(--bg);padding:12px 14px;border-radius:10px;white-space:pre-line;line-height:1.8;margin:4px 0 12px;font-size:.98rem}
+.fig{display:flex;justify-content:center;margin:4px 0 12px;color:var(--ink)}.fig svg{width:100%;max-width:320px;height:auto}
+.box{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-block;border-radius:99px;padding:2px 12px;font-size:.85rem;background:var(--bg);color:var(--sub)}
+.pill.on{background:color-mix(in srgb,var(--ok) 20%,var(--card));color:var(--ok)}
+.rel{border:0;border-radius:12px;padding:13px;width:100%;font:inherit;font-weight:700;cursor:pointer;margin-top:10px;background:var(--ok);color:#fff}
+.rel.off{background:none;border:2px solid var(--no);color:var(--no)}
+.mine a{color:var(--g)}.mine li{margin:4px 0}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin:10px 0 2px}
+.grid button{aspect-ratio:1;border:1.5px solid var(--line);border-radius:6px;background:var(--card);color:var(--sub);font:inherit;font-size:.72rem;padding:0;cursor:pointer}
+.grid button.done{background:color-mix(in srgb,var(--c) 22%,var(--card));color:var(--ink);border-color:var(--c)}
+.grid button.dkm{background:color-mix(in srgb,var(--dk) 22%,var(--card));border-color:var(--dk);color:var(--ink)}
+.grid button.cur{outline:2px solid var(--ink);outline-offset:1px}
+.law{font-size:.82rem;color:var(--sub);margin-top:6px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const API='https://inulbquzdxzinpidgwhh.supabase.co/functions/v1/medtech';
+const SUBJ={b:{n:'생물',c:'var(--b)'},g:{n:'공중보건',c:'var(--g)'},l:{n:'의료관계법규',c:'var(--l)'}};
+const $=document.getElementById('app');
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=d=>d?(+d.slice(5,7))+'월 '+(+d.slice(8,10))+'일':'';
+const when=at=>new Date(at).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'});
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const getJSON=async u=>{const r=await fetch(u);let j=null;try{j=await r.json()}catch(e){}return{status:r.status,ok:r.ok,j}};
+const postJSON=async(u,b)=>{const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});let j=null;try{j=await r.json()}catch(e){}return{status:r.status,ok:r.ok,j}};
+const NUM='①②③④';
+
+let name='',set=null,idx=0,sel=[];
+
+/* ---------- 수험생: 시작 ---------- */
+function home(){
+ name=store.get('mt_name','');
+ const mine=store.get('mt_mine',[]).slice(0,14);
+ $.innerHTML=`<h1>의료기술직<br>매일 모의고사</h1>
+ <p class="lead">생물·공중보건·의료관계법규 각 10문항, 하루 30문항입니다. 새 문제는 매일 아침 6시에 올라옵니다. 제출하면 선생님이 확인한 뒤 정답과 해설이 열립니다.<br><b>모르는 문제는 찍지 말고 '모름'을 눌러 주세요.</b> 약한 단원을 정확히 찾는 데 필요합니다.</p>
+ <label for="nm">이름</label><input id="nm" maxlength="20" placeholder="이름" autocomplete="off" value="${esc(name)}">
+ <button class="all" onclick="start()">오늘 문제 풀기</button>
+ <p id="msg" class="lead" role="status" style="margin-top:10px"></p>
+ ${mine.length?`<h2 class="sec">지난 결과</h2><div class="box mine"><ul style="margin:0;padding-left:18px">${mine.map(m=>`<li><a href="#r=${m.rid}">${fmt(m.date)} 모의고사</a></li>`).join('')}</ul><div class="weak" style="margin-top:6px">선생님이 확인하면 정답과 해설이 열립니다.</div></div>`:''}`;
+}
+async function start(){
+ const msg=document.getElementById('msg');
+ name=document.getElementById('nm').value.trim();
+ if(!name){document.getElementById('nm').focus();msg.textContent='이름을 입력해 주세요.';return}
+ store.set('mt_name',name);
+ msg.textContent='문제를 불러오는 중…';
+ try{
+  const r=await getJSON(`${API}/set`);
+  if(r.status===404){msg.textContent='아직 올라온 문제가 없습니다. 오전 6시 이후에 다시 들어와 주세요.';return}
+  if(!r.ok)throw 0;
+  set=r.j;
+ }catch(e){msg.textContent='문제를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.';return}
+ const done=store.get('mt_mine',[]).find(m=>m.date===set.date);
+ if(done){
+  $.innerHTML=`<h1>이미 제출했습니다</h1><p class="lead">${fmt(set.date)} 문제는 이미 제출했습니다. 다음 문제는 내일 아침 6시에 올라옵니다.</p>
+  <button class="all" onclick="location.hash='#r=${done.rid}'">결과 보기</button><button class="home" onclick="home()">처음으로</button>`;return;
+ }
+ const draft=store.get('mt_draft',null);
+ sel=(draft&&draft.date===set.date&&Array.isArray(draft.sel))?draft.sel:[];
+ idx=Math.min(sel.filter(x=>x!==undefined&&x!==null).length,set.questions.length-1);
+ show();
+}
+const answered=i=>sel[i]!==undefined&&sel[i]!==null;
+function saveDraft(){store.set('mt_draft',{date:set.date,sel})}
+function show(){
+ const qs=set.questions,q=qs[idx],c=SUBJ[q.s].c,last=idx===qs.length-1,left=qs.filter((_,i)=>!answered(i)).length;
+ const opts=q.options.map((o,i)=>`<button class="opt ${sel[idx]===i?'pick':''}" onclick="pick(${i})"><span class="no">${NUM[i]}</span><span>${esc(o)}</span></button>`).join('');
+ const dk=`<button class="opt dk ${sel[idx]===-2?'pick':''}" onclick="pick(-2)">모름 (찍지 않고 넘기기)</button>`;
+ const grid=qs.map((x,i)=>`<button style="--c:${SUBJ[x.s].c}" class="${sel[i]===-2?'dkm':answered(i)?'done':''} ${i===idx?'cur':''}" onclick="go(${i})" aria-label="${i+1}번">${i+1}</button>`).join('');
+ $.innerHTML=`<div class="meta"><span>${SUBJ[q.s].n}</span><span>${idx+1} / ${qs.length}</span></div>
+ <div class="bar" style="--c:${c}"><i style="width:${(qs.length-left)/qs.length*100}%"></i></div>
+ <div class="q" style="--c:${c}"><span class="tag">${esc(q.unit)}</span>${q.passage?`<div class="psg">${esc(q.passage)}</div>`:''}${q.fig?`<div class="fig">${q.fig}</div>`:''}<h2>${esc(q.q)}</h2>${opts}${dk}
+ <div class="navrow"><button class="home" ${idx?'':'disabled style="opacity:.4"'} onclick="go(${idx-1})">이전</button>
+ <button class="next" style="--c:${c}" ${answered(idx)?'':'disabled'} onclick="next()">${last?(left?`안 푼 문제 ${left}개`:'제출하기'):'다음'}</button></div></div>
+ <details class="box" style="margin-top:12px"><summary>문항 이동 (안 푼 문제 ${left}개)</summary><div class="grid">${grid}</div></details>`;
+}
+function pick(i){sel[idx]=i;saveDraft();show()}
+function go(i){if(i>=0&&i<set.questions.length){idx=i;show();scrollTo(0,0)}}
+function next(){
+ const qs=set.questions;
+ if(idx<qs.length-1){go(idx+1);return}
+ const first=qs.findIndex((_,i)=>!answered(i));
+ if(first>=0){go(first);return}
+ done();
+}
+async function done(){
+ const p={name,setId:set.date,answers:set.questions.map((_,i)=>sel[i])};
+ $.innerHTML=`<h1>제출하는 중…</h1>`;scrollTo(0,0);
+ try{
+  const r=await postJSON(API+'/submit',p);
+  if(!r.ok||!r.j||!r.j.rid)throw 0;
+  const mine=store.get('mt_mine',[]);mine.unshift({rid:r.j.rid,date:p.setId,at:Date.now()});store.set('mt_mine',mine.slice(0,60));
+  store.set('mt_draft',null);
+  $.innerHTML=`<h1>제출했습니다</h1><p class="lead">수고하셨습니다. 선생님이 확인(OK)하면 결과 화면에서 점수와 정답, 해설을 볼 수 있습니다.</p>
+  <button class="all" onclick="location.hash='#r=${r.j.rid}'">결과 보기</button><button class="home" onclick="location.hash='';home()">처음으로</button>`;
+ }catch(e){
+  $.innerHTML=`<h1>전송하지 못했습니다</h1><p class="lead">답안은 이 기기에 저장돼 있습니다. 인터넷 연결을 확인하고 다시 보내 주세요.</p><button class="all" onclick="done()">다시 보내기</button>`;
+ }
+}
+
+/* ---------- 채점 ---------- */
+function score(sub,qs){
+ const rows=qs.map((q,i)=>{const a=sub.answers[i],dk=a===-2;return{q,i,dk,ok:!dk&&a===q.answer,mine:dk?'모름':(q.options[a]??'(미응답)')}});
+ const per=Object.keys(SUBJ).map(k=>{const r=rows.filter(x=>x.q.s===k);return{k,ok:r.filter(x=>x.ok).length,n:r.length,dk:r.filter(x=>x.dk).length}});
+ return{rows,per,tot:rows.filter(r=>r.ok).length,nk:rows.filter(r=>r.dk).length};
+}
+function itemHtml(r,st){
+ const col=r.dk?'var(--dk)':r.ok?'var(--ok)':'var(--no)';
+ return `<div class="wrong"><b style="color:${col}">${r.dk?'모름':r.ok?'정답':'오답'}</b> ${r.i+1}번 ${SUBJ[r.q.s].n} · ${esc(r.q.unit)}${r.q.passage?`<div class="psg">${esc(r.q.passage)}</div>`:'<br>'}<span style="white-space:pre-line">${esc(r.q.q)}</span><br>${st?'내 답':'수험생 답'}: ${esc(r.mine)}${r.ok?'':`<br>정답: ${NUM[r.q.answer]} ${esc(r.q.options[r.q.answer])}`}<br><span class="weak">${esc(r.q.exp)}</span></div>`;
+}
+function card(sub,qs,mode){
+ const st=mode==='student';
+ if(!qs||sub.answers.length!==qs.length)return `<div class="res"><h3>채점할 수 없는 제출</h3></div>`;
+ const g=score(sub,qs);
+ const chips=g.per.map(p=>`<span class="chip" style="--c:${SUBJ[p.k].c}">${SUBJ[p.k].n} ${p.ok}/${p.n}${p.dk?` (모름 ${p.dk})`:''}</span>`).join('');
+ const wrong=g.rows.filter(r=>!r.ok),right=g.rows.filter(r=>r.ok);
+ return `<div class="res"><h3><span>${esc(sub.name)}</span><span>${g.tot} / ${qs.length} (${Math.round(g.tot/qs.length*100)}점)</span></h3>
+ <div class="weak">${sub.at?when(sub.at)+' 제출 · ':''}${fmt(sub.setId)} 모의고사${g.nk?` · 모름 ${g.nk}개`:''}</div><div class="chips">${chips}</div>
+ ${wrong.length?`<details ${st?'open':''}><summary>틀린 문제·모름 ${wrong.length}개 해설</summary>${wrong.map(r=>itemHtml(r,st)).join('')}</details>`:'<p class="weak">전부 맞혔습니다.</p>'}
+ ${right.length?`<details><summary>맞힌 문제 ${right.length}개 해설</summary>${right.map(r=>itemHtml(r,st)).join('')}</details>`:''}
+ ${mode==='list'?`<button class="home" onclick="copyLink('${sub.rid}',this)">${window.LTApp?'결과 링크 보내기':'결과 링크 복사'}</button>`:''}</div>`;
+}
+async function copyLink(rid,btn){
+ const u=location.origin+location.pathname+'#r='+rid;
+ if(window.LTApp){LTApp.share('의료기술직 모의고사 결과입니다. 틀린 문제 해설을 꼭 확인하세요.\n'+u);return}
+ try{await navigator.clipboard.writeText(u);btn.textContent='복사했습니다';setTimeout(()=>btn.textContent='결과 링크 복사',2000)}
+ catch(e){const i=document.createElement('input');i.value=u;i.readOnly=true;i.style.marginTop='8px';btn.after(i);i.select()}
+}
+const fail=(t,m)=>{$.innerHTML=`<h1>${t}</h1><p class="lead">${m}</p><button class="all" onclick="route()">다시 시도</button>`};
+
+/* ---------- 수험생: 결과 ---------- */
+async function result(rid){
+ $.innerHTML=`<p class="lead">결과를 불러오는 중…</p>`;
+ try{
+  const r=await getJSON(`${API}/result?rid=${encodeURIComponent(rid)}`);
+  if(r.status===404||r.status===400){$.innerHTML=`<h1>결과를 찾을 수 없습니다</h1><button class="home" onclick="location.hash=''">처음으로</button>`;return}
+  if(!r.ok)throw 0;
+  const x=r.j;
+  if(x.locked){
+   $.innerHTML=`<h1>선생님 확인 중</h1><p class="lead">${fmt(x.setId)} 답안은 정상적으로 제출됐습니다. 선생님이 OK하면 이 화면에서 점수와 정답, 해설을 볼 수 있습니다.</p>
+   <button class="all" onclick="route()">새로 고침</button><button class="home" onclick="location.hash=''">처음으로</button>`;return;
+  }
+  $.innerHTML=`<h1>${fmt(x.setId)} 결과</h1>`+card(x,x.questions,'student')+`<p class="law">법규 문항은 출제 시점의 법령 기준입니다. 시험 전 최신 법령을 꼭 확인하세요.</p><button class="home" onclick="location.hash=''">처음으로</button>`;
+ }catch(e){fail('불러오지 못했습니다','인터넷 연결을 확인하고 다시 시도해 주세요.')}
+}
+
+/* ---------- 선생님 ---------- */
+let T={key:'',date:null,data:null,app:false};
+async function teacherLoad(date){
+ $.innerHTML=`<h1>의료기술직 채점</h1><p class="lead">불러오는 중…</p>`;
+ try{
+  const r=await getJSON(`${API}/teacher?key=${encodeURIComponent(T.key)}${date?'&date='+date:''}`);
+  if(r.status===403){$.innerHTML=`<h1>권한이 없습니다</h1><p class="lead">채점 주소(키)를 확인해 주세요.</p>${T.app?'<button class="home" onclick="appLogout()">키 다시 입력</button>':''}`;return}
+  if(!r.ok)throw 0;
+  T.data=r.j;T.date=r.j.date;teacherView();
+ }catch(e){fail('불러오지 못했습니다','인터넷 연결을 확인하고 다시 시도해 주세요.')}
+}
+function teacherView(){
+ const d=T.data,s=d.set,subs=d.subs||[];
+ const sw=T.app?`<button class="home" onclick="location.href='../leveltest/level-test.html#app'">← 레벨 테스트(4·5학년) 채점으로</button>`:'';
+ if(!d.date||!s){$.innerHTML=`<h1>의료기술직 채점</h1>${sw}<p class="lead">아직 만들어진 문제가 없습니다.</p>`;return}
+ const gs=subs.map(x=>score(x,s.questions));
+ const weak=Object.keys(SUBJ).map(k=>({k,n:gs.length?gs.reduce((a,g)=>a+g.per.find(p=>p.k===k).ok,0)/gs.length:null}));
+ $.innerHTML=`<h1>의료기술직 채점</h1>${sw}
+ <label for="dt">날짜</label><select id="dt" onchange="teacherLoad(this.value)">${d.dates.map(x=>`<option value="${x}" ${x===d.date?'selected':''}>${fmt(x)}</option>`).join('')}</select>
+ <button class="home" onclick="teacherLoad(T.date)">새로 고침</button>
+ <div class="box" style="margin-top:14px">
+  <div class="row"><b>제출 ${subs.length}건</b><span class="pill ${s.released?'on':''}">${s.released?'정답 공개 중':'정답 비공개'}</span></div>
+  ${gs.length?`<div class="chips">${weak.map(w=>`<span class="chip" style="--c:${SUBJ[w.k].c}">${SUBJ[w.k].n} 평균 ${w.n.toFixed(1)}/10</span>`).join('')}</div>`:''}
+  <button class="rel ${s.released?'off':''}" onclick="release(${!s.released})">${s.released?'공개 취소 (다시 숨기기)':'OK — 정답·해설 공개'}</button>
+ </div>
+ <h2 class="sec">제출 결과</h2>
+ ${subs.map(x=>card(x,s.questions,'list')).join('')||'<p class="lead">아직 제출이 없습니다.</p>'}
+ <details class="box"><summary>문제와 정답 미리보기 (${s.questions.length}문항)</summary>${s.questions.map((q,i)=>`<div class="wrong"><b>${i+1}번</b> ${SUBJ[q.s].n} · ${esc(q.unit)}${q.passage?`<div class="psg">${esc(q.passage)}</div>`:'<br>'}${q.fig?`<div class="fig">${q.fig}</div>`:''}<span style="white-space:pre-line">${esc(q.q)}</span><br>${q.options.map((o,j)=>`<span style="${j===q.answer?'color:var(--ok);font-weight:700':''}">${NUM[j]} ${esc(o)}</span>`).join('<br>')}<br><span class="weak">${esc(q.exp)}</span></div>`).join('')}</details>
+ ${T.app?`<button class="home" onclick="location.hash='#student'">수험생 화면 미리 보기</button><button class="home" onclick="shareStudent()">수험생 주소 보내기</button>`:''}`;
+}
+async function release(on){
+ const btn=document.querySelector('.rel');btn.disabled=true;btn.textContent='처리 중…';
+ try{const r=await postJSON(API+'/release',{key:T.key,date:T.date,released:on});if(!r.ok)throw 0;teacherLoad(T.date)}
+ catch(e){btn.disabled=false;btn.textContent='실패했습니다. 다시 눌러 주세요.'}
+}
+
+/* ---------- 선생님 앱(레벨 테스트 관리 앱과 같은 키 사용) ---------- */
+const STUDENT_URL=location.origin+location.pathname;
+function appLogin(err){
+ $.innerHTML=`<h1>의료기술직 채점</h1>
+ <p class="lead">채점 주소(또는 키)를 붙여넣어 주세요. 레벨 테스트와 같은 키입니다. 이 기기에만 저장됩니다.</p>
+ <input id="tk" placeholder="채점 주소 붙여넣기" autocomplete="off">
+ <button class="all" onclick="appSave()">시작</button>
+ <p class="lead" role="status" style="margin-top:10px;color:var(--no)">${err||''}</p>`;
+}
+async function appSave(){
+ const v=document.getElementById('tk').value.trim(),m=v.match(/#teacher=([^&\s#]+)/),k=decodeURIComponent(m?m[1]:v);
+ if(!k)return appLogin('주소를 붙여넣어 주세요.');
+ try{const r=await getJSON(`${API}/teacher?key=${encodeURIComponent(k)}`);if(r.status===403)return appLogin('채점 주소가 맞지 않습니다.');if(!r.ok)throw 0}
+ catch(e){return appLogin('인터넷 연결을 확인해 주세요.')}
+ store.set('lt_tkey',k);route();
+}
+function appLogout(){store.set('lt_tkey','');T.key='';appLogin()}
+function shareStudent(){
+ const t='의료기술직 매일 모의고사 (매일 오전 6시 새 문제)\n바로 풀기: '+STUDENT_URL+'\n앱 설치(안드로이드): '+new URL('app.html',location.href).href;
+ if(window.LTApp)LTApp.share(t);
+ else if(navigator.share)navigator.share({text:t}).catch(()=>{});
+ else navigator.clipboard?.writeText(t).then(()=>alert('복사했습니다.')).catch(()=>prompt('주소를 복사하세요',STUDENT_URL));
+}
+
+function route(){
+ const h=location.hash;scrollTo(0,0);
+ if(h==='#app'){const k=store.get('lt_tkey','');T.app=true;if(k){T.key=k;teacherLoad(T.date)}else appLogin();return}
+ if(h==='#student'){home();if(T.app)$.insertAdjacentHTML('afterbegin','<button class="home" onclick="location.hash=\'#app\'" style="margin:0 0 8px">← 채점 화면으로</button>');return}
+ if(h.startsWith('#teacher=')){T.key=decodeURIComponent(h.slice(9));teacherLoad(T.date)}
+ else if(h.startsWith('#r='))result(h.slice(3));
+ else home();
+}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>

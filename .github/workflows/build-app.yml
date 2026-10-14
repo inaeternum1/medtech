@@ -1,0 +1,56 @@
+# 수험생 앱(의료기술직 모의고사) APK를 만들어 저장소 루트에 올린다.
+# android/ 폴더가 바뀌거나 Actions 화면에서 직접 실행할 때 돈다.
+# 서명 키는 빌드할 때마다 새로 만든다 → 새 버전으로 바꿀 때는 기존 앱을 지우고 설치해야 한다.
+# 선생님은 레벨 테스트 관리 앱 안에서 '의료기술직 채점'으로 넘어온다(같은 사이트 주소).
+name: build-app
+on:
+  push:
+    branches: [main]
+    paths: ["android/**", ".github/workflows/build-app.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Build APK
+        run: |
+          set -euo pipefail
+          pip install --quiet pillow
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          PF=$(ls -d "$ANDROID_HOME"/platforms/android-* | sort -V | tail -1)/android.jar
+          PASS=$(openssl rand -hex 16)
+          keytool -genkeypair -keystore ks.p12 -storetype PKCS12 -storepass "$PASS" -keypass "$PASS" \
+            -alias mt -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=MedTech" >/dev/null
+          PKG=kr.medtech.exam; LABEL="의료기술직 모의고사"; START="https://inaeternum1.github.io/medtech/"
+          W=build; mkdir -p "$W/classes" "$W/gen" "$W/dex" "$W/res"
+          sed -e "s|__PKG__|$PKG|" -e "s|__LABEL__|$LABEL|" android/AndroidManifest.xml > "$W/AndroidManifest.xml"
+          D="$W/src/$(echo "$PKG" | tr . /)"; mkdir -p "$D"
+          sed -e "s|__PKG__|$PKG|" -e "s|__HOST__|inaeternum1.github.io|" -e "s|__START__|$START|" \
+              -e "s|__RELOAD__|true|" android/src/MainActivity.java > "$D/MainActivity.java"
+          python3 android/make_icons.py student "$W/res"
+          "$BT/aapt2" compile --dir "$W/res" -o "$W/res.zip"
+          "$BT/aapt2" link -I "$PF" --manifest "$W/AndroidManifest.xml" -o "$W/base.apk" "$W/res.zip" --java "$W/gen" \
+            --min-sdk-version 24 --target-sdk-version 34 --version-code 1 --version-name 1.0 --auto-add-overlay
+          javac -encoding UTF-8 --release 11 -cp "$PF" -d "$W/classes" $(find "$W/src" "$W/gen" -name '*.java')
+          "$BT/d8" --lib "$PF" --min-api 24 --release --output "$W/dex" $(find "$W/classes" -name '*.class')
+          cp "$W/base.apk" "$W/unsigned.apk"
+          (cd "$W/dex" && zip -q ../unsigned.apk classes.dex)
+          "$BT/zipalign" -p -f 4 "$W/unsigned.apk" "$W/aligned.apk"
+          "$BT/apksigner" sign --ks ks.p12 --ks-pass "pass:$PASS" --out medtech.apk "$W/aligned.apk"
+          "$BT/apksigner" verify medtech.apk
+          "$BT/aapt2" dump badging medtech.apk | grep -E "^package|application-label:"
+          rm -rf build ks.p12
+      - name: Commit APK
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add medtech.apk
+          git commit -m "build: update app APK [skip ci]" || echo "nothing to commit"
+          git push
